@@ -23,7 +23,7 @@ class charCount
 	charBox(charBox x)
 	{
 		name=NULL;
-		count=0'
+		count=0;
 		next=x;
 	};
 	char getName(){return name;}
