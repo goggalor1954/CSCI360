@@ -54,9 +54,11 @@ void buildCharBox(queue<charBox>* x)
 //if the elemets name variable == '\0' then it assignes the character to name , increments count by 1 and returns boxVar. 
 //if the entered character == name then it increments that character element by 1 and returns boxVar.
 // if not it pops the boxVar and calls charCount untill it finds the character or boxVar is empty. 
+//altered from the last version to only count printable ascii characters.
  
 queue<charBox>* charCount( queue<charBox>* boxVar, char charVal)
 {
+	if(charVal<32 || charVal>126){return boxVar;}
 	//if boxVar is empty, return
 	if(boxVar->empty()) //test. should only get here if there are more than 26 characters.
 	{
@@ -139,17 +141,25 @@ queue<charBox>* removeCharBox(queue<charBox>* boxVar, char name)
 	return boxVar;
 	
 }
+
+
 	
 	
 
 int main()
 {
+	char charTemp; //test variable
+	
 
 	queue<charBox> alphaChars;
 	buildCharBox(&alphaChars);
 	fstream infile, outfile;
 	infile.open("ciphertext.txt");
-	while(!infile.eof()){charCount( &alphaChars, infile.get());}
+	while(!infile.eof()
+	){
+		charTemp=infile.get();
+		charCount( &alphaChars, charTemp);
+	}
 	infile.close();
 	setFreq(&alphaChars, getTotal(alphaChars));
 	outfile.open("cipher_freq.txt");
