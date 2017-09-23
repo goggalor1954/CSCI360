@@ -92,6 +92,7 @@ std::list<charBox>* removeCharBox(std::list<charBox>* boxVar, char name)
 	}
 	charBox temp =boxVar->front();
 	boxVar->pop_front();
+	boxVar=removeCharBox(boxVar, name);
 	boxVar->push_front(temp);
 	return boxVar;
 	
