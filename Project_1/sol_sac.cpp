@@ -46,7 +46,7 @@ public:
 //fills the queue x with 27 elements 
 void buildCharBox(queue<charBox>* x)
 {
-	for(int i=0; i<267; i++){x->push(charBox(i));}
+	for(int i=0; i<26; i++){x->push(charBox(i));}
 }
 
 //recursivly counts the number of occurances of the entered character. 
@@ -138,9 +138,9 @@ queue<charBox>* removeCharBox(queue<charBox>* boxVar, char name)
 	boxVar->pop();
 	boxVar=removeCharBox( boxVar, name);
 	boxVar->push(temp);
-	return boxVar;
-	
+	return boxVar;	
 }
+//trying to fix this mess. removing characters that 
 
 
 	
