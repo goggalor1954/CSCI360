@@ -11,7 +11,7 @@ letter is a alphabetical or space character and rel_freq is a floting point numb
 */
 
 #include <iostream>
-#include <queue>
+#include <list>
 #include <fstream>
 using namespace std;
 
@@ -43,20 +43,20 @@ public:
 	}
 };
 
-//fills the queue x with 27 elements 
-void buildCharBox(queue<charBox>* x)
+//fills the list x with 27 elements 
+void buildCharBox(list<charBox>* x)
 {
-	for(int i=0; i<26; i++){x->push(charBox(i+65));}
-	x->push(charBox(' '));
+	for(int i=0; i<26; i++){x->push_front(charBox(i+65));}
+	x->push_front(charBox(' '));
 }
 
 //recursivly counts the number of occurances of the entered character. 
-//doubles as a way to enter new characters into the queue. 
+//doubles as a way to enter new characters into the list. 
 //if the elemets name variable == '\0' then it assignes the character to name , increments count by 1 and returns boxVar. 
 //if the entered character == name then it increments that character element by 1 and returns boxVar.
-// if not it pops the boxVar and calls charCount untill it finds the character or boxVar is empty. 
+// if not it pop_fronts the boxVar and calls charCount untill it finds the character or boxVar is empty. 
  
-queue<charBox>* charCount( queue<charBox>* boxVar, char charVal)
+list<charBox>* charCount( list<charBox>* boxVar, char charVal)
 {
 	//if boxVar is empty, return
 	if(boxVar->empty()) { return boxVar;}
@@ -73,38 +73,38 @@ queue<charBox>* charCount( queue<charBox>* boxVar, char charVal)
 		boxVar->front().add();
 		return boxVar;
 	}
-	//if not, pop the front value of boxVar, store it, and pass it and char val to charCount. push it back into box var once it returns. then return box var.
+	//if not, pop_front the front value of boxVar, store it, and pass it and char val to charCount. push_front it back into box var once it returns. then return box var.
 	charBox temp=boxVar->front();
-	boxVar->pop();
+	boxVar->pop_front();
 	boxVar=charCount(boxVar, charVal);
-	boxVar->push(temp);
+	boxVar->push_front(temp);
 	return boxVar;
 }
 //returns an int with the total number of characters 
-int getTotal(queue<charBox> boxVar)
+int getTotal(list<charBox> boxVar)
 {
 	int total=0;
 	while(!boxVar.empty())
 	{
 		total+=boxVar.front().getCount();
-		boxVar.pop();
+		boxVar.pop_front();
 	}
 	return total;
 }
-//computes the frequency of all the elements in the queue.
-queue<charBox>* setFreq( queue<charBox>* boxVar, int total)
+//computes the frequency of all the elements in the list.
+list<charBox>* setFreq( list<charBox>* boxVar, int total)
 {
 	if(boxVar->empty()){return boxVar;}
 	boxVar->front().setFreq(total);
 	charBox temp=boxVar->front();
-	boxVar->pop();
+	boxVar->pop_front();
 	boxVar=setFreq(boxVar, total);
-	boxVar->push(temp);
+	boxVar->push_front(temp);
 	return boxVar;
 }
 
-//searches the queue for the highest frequency element, outputs it to the given fstream. returnes the element to be deleted from the queue.
-charBox getHighest( queue<charBox> boxVar, float highest, charBox element)
+//searches the list for the highest frequency element, outputs it to the given fstream. returnes the element to be deleted from the list.
+charBox getHighest( list<charBox> boxVar, float highest, charBox element)
 {
 	//if boxVar is empty, return element.
 	if(boxVar.empty())
@@ -117,22 +117,22 @@ charBox getHighest( queue<charBox> boxVar, float highest, charBox element)
 		highest=boxVar.front().getFreq();
 		element=boxVar.front();
 	}
-	boxVar.pop();
+	boxVar.pop_front();
 	return getHighest(boxVar, highest, element);
 }
-//searches through the queue and remove the matching element.
-queue<charBox>* removeCharBox(queue<charBox>* boxVar, char name)
+//searches through the list and remove the matching element.
+list<charBox>* removeCharBox(list<charBox>* boxVar, char name)
 {	
 	if(boxVar->empty()){return boxVar;}
 	if(boxVar->front().getName() == name)
 	{
-		boxVar->pop();
+		boxVar->pop_front();
 		return boxVar;
 	}
 	charBox temp =boxVar->front();
-	boxVar->pop();
+	boxVar->pop_front();
 	boxVar=removeCharBox( boxVar, name);
-	boxVar->push(temp);
+	boxVar->push_front(temp);
 	return boxVar;
 	
 }
@@ -142,7 +142,7 @@ queue<charBox>* removeCharBox(queue<charBox>* boxVar, char name)
 int main()
 {
 
-	queue<charBox> alphaChars;
+	list<charBox> alphaChars;
 	buildCharBox(&alphaChars);
 	fstream infile, outfile;
 	infile.open("corpus_clean.txt");
@@ -157,6 +157,7 @@ int main()
 	{
 		temp=getHighest(alphaChars, 0, alphaChars.front().getName());
 		outfile << temp.getName() << ", "<< temp.getFreq() << endl;
+		cout << temp.getName() << ", "<< temp.getFreq() << endl; //test
 		removeCharBox( &alphaChars, temp.getName());
 	}
 
