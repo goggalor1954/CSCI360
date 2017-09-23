@@ -13,35 +13,10 @@ letter is a alphabetical or space character and rel_freq is a floting point numb
 #include <iostream>
 #include <list>
 #include <fstream>
+#include "charBox.h"
 using namespace std;
 
-//A class conting a char variable, and an int variable to count the occurance of the char.
-class charBox
-{
-private:
-	int count;
-	char name;
-	float freq;
-public:
-	void add(){count=count+1;}
-	void setName(char x){name =x;}
-	int getCount(){return count;}
-	char getName(){return name;}
-	float getFreq(){return freq;}
-	void setFreq(int total){freq=float(count)/float(total);}
-	charBox()
-	{
-		count =0;
-		name='\0';
-		freq=0;
-	}
-	charBox(char x)
-	{
-		count=0;
-		name=x;
-		freq=0;
-	}
-};
+
 
 //fills the list x with 27 elements 
 void buildCharBox(list<charBox>* x)
@@ -157,7 +132,6 @@ int main()
 	{
 		temp=getHighest(alphaChars, 0, alphaChars.front().getName());
 		outfile << temp.getName() << ", "<< temp.getFreq() << endl;
-		cout << temp.getName() << ", "<< temp.getFreq() << endl; //test
 		removeCharBox( &alphaChars, temp.getName());
 	}
 
