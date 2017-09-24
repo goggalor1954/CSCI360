@@ -12,8 +12,8 @@ letter is a printable ascii and rel_freq is a floting point number is the reliti
 #include <iostream>
 #include <list>
 #include <fstream>
-#include "charBox.h"
-#include "statAnalyzer.h"
+#include "hFiles/charBox.h"
+#include "hFiles/statAnalyzer.h"
 using namespace std;
 
 int main()
