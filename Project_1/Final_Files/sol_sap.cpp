@@ -13,8 +13,8 @@ letter is a alphabetical or space character and rel_freq is a floting point numb
 #include <iostream>
 #include <list>
 #include <fstream>
-#include "hFiles/charBox.h"
-#include "hFiles/statAnalyzer.h"
+#include "charBox.h"
+#include "statAnalyzer.h"
 using namespace std;
 	
 

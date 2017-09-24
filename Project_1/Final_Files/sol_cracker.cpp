@@ -13,8 +13,8 @@ The characters a replaced by occurance of frequency. this will not be a perfect 
 #include <iostream>
 #include <list>
 #include <fstream>
-#include "hFiles/charBox.h"
-#include "hFiles/statAnalyzer.h"
+#include "charBox.h"
+#include "statAnalyzer.h"
 using namespace std;
 
 
