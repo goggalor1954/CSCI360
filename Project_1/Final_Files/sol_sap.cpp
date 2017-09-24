@@ -28,7 +28,7 @@ int main()
 	while(!infile.eof()){charCount( &alphaChars, infile.get());}
 	infile.close();
 	setFreq(&alphaChars, getTotal(alphaChars));
-	outfile.open("corpus_freq.txt");
+	outfile.open("corpus_freq.txt", std::fstream::out | std::fstream::trunc);
 	charBox temp;
 
 	while(!alphaChars.empty()) 	

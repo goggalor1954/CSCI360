@@ -19,7 +19,7 @@ int main()
 	fstream infile, outfile;
 	char temp;
 	infile.open("corpus.txt");
-	outfile.open("corpus_clean.txt");
+	outfile.open("corpus_clean.txt" , std::fstream::out | std::fstream::trunc);
 	
 	while(!infile.eof())
 	{

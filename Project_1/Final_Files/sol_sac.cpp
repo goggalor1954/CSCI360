@@ -33,7 +33,7 @@ int main()
 	}
 	infile.close();
 setFreq(&alphaChars, getTotal(alphaChars));
-	outfile.open("cipher_freq.txt");
+	outfile.open("cipher_freq.txt", std::fstream::out | std::fstream::trunc);
 	charBox temp;
 	while(!alphaChars.empty()) 	
 	{

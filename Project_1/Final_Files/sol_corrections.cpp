@@ -19,67 +19,67 @@ using namespace std;
 int main()
 {
 	fstream infile, outfile;
+	char temp;
 	infile.open("cracked.txt");
-	outfile.open("clear.txt");
+	outfile.open("clear.txt", std::fstream::out | std::fstream::trunc);
+	temp=infile.get();
 	while(!infile.eof())
 	{
-		temp=infile.get();//trying to get rid of those illegal characters that are being generated for some reason.
-		if(temp==12){}//trying to get rid of those illegal characters that are being generated for some reason.
-		else
+
+		//these were chosen in no particular order.
+		switch(temp)
 		{
-			//these were chosen in no particular order.
-			switch(temp)
-			{
-				case 'O':outfile <<'H';
-					break;
-				case 'C':outfile <<'U';
-					break;
-				case 'H':outfile <<'N';
-					break;
-				case 'R':outfile <<'D';
-					break; 
-				case 'L':outfile <<'R';
-					break; 
-				case 'N':outfile <<'O';
-					break; 
-				case 'W':outfile <<'G';
-					break; 
-				case 'F':outfile <<'M';
-					break; 
-				case 'M': outfile <<'F';
-					break; 
-				case 'Y':outfile <<'P';
-					break;
-				case 'P':outfile <<'B';
-					break;
-				case 'K':outfile <<'V';
-					break;
-				case 'U':outfile <<'C';
-					break;
-				case 'G':outfile <<'W';
-					break;
-				case 'D':outfile <<'L';
-					break;
-				case 'B':outfile <<'Y';
-					break;
-				case 'V':outfile <<'K';
-					break;
-				case 'J':outfile <<'Z';
-					break;
-				case 'Q':outfile <<'X';
-					break;
-				case 'X':outfile <<'J';
-					break;
-				case 'Z':outfile <<'Q';
-					break;
-				default: outfile << temp;
-					break;
-			}
+			case 'O':outfile <<'H';
+				break;
+			case 'C':outfile <<'U';
+				break;
+			case 'H':outfile <<'N';
+				break;
+			case 'R':outfile <<'D';
+				break; 
+			case 'L':outfile <<'R';
+				break; 
+			case 'N':outfile <<'O';
+				break; 
+			case 'W':outfile <<'G';
+				break; 
+			case 'F':outfile <<'M';
+				break; 
+			case 'M': outfile <<'F';
+				break; 
+			case 'Y':outfile <<'P';
+				break;
+			case 'P':outfile <<'B';
+				break;
+			case 'K':outfile <<'V';
+				break;
+			case 'U':outfile <<'C';
+				break;
+			case 'G':outfile <<'W';
+				break;
+			case 'D':outfile <<'L';
+				break;
+			case 'B':outfile <<'Y';
+				break;
+			case 'V':outfile <<'K';
+				break;
+			case 'J':outfile <<'Z';
+				break;
+			case 'Q':outfile <<'X';
+				break;
+			case 'X':outfile <<'J';
+				break;
+			case 'Z':outfile <<'Q';
+				break;
+			default: outfile << temp;
+				break;
+			
 		}
+		temp=infile.get();
 	}
-	return 0;
 	infile.close();
 	outfile.close();
+	return 0;
 
 }
 

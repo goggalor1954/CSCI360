@@ -42,7 +42,7 @@ int main()
 	}
 	infile.close();
 	infile.open("ciphertext.txt");
-	outfile.open("cracked.txt");
+	outfile.open("cracked.txt", std::fstream::out | std::fstream::trunc);
 	//reads in characters from ciphertext.txt. outputs the decrypted characters to cracked.txt
 	while(!infile.eof())
 	{
