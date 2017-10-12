@@ -10,7 +10,7 @@ this program is a modification of lfsr.c for the purpose of developing the missi
 
 /*
 to do:
-read_lfsr
+read_lfsr 			done
 next_state
 get_128_keystream
 shape_keystream
@@ -34,7 +34,37 @@ typedef struct {
 	uint64_t taps;
 } LFSR;
 
+void init_LFSR(LFSR* L, uint64_t initial_state, uint64_t taps)
+{
+/*Initialize with state and taps*/
+	L->state = initial_state;
+	L->taps = taps;
+}
+
+
+
+//everyhting below is something i had to modify. everything above came with the program
+
+
+
+int read_lfsr(LFSR* L)
+{
+/*Return the current output bit (the rightmost bit of the state variable) */
+//get the rghtmost bit by returning L mod 2
+	return L->state%2;
+}
+
 int main()
 {
+	LFSR L;
+	uint64_t initial_state = 0xbeefcafebabecab1;
+	uint64_t taps = 0xdeaddeedacedface;
+	init_LFSR(&L,initial_state,taps);
+	//everyhing after this i need to fill in myself
+
+	//test
+
+
+
 
 }

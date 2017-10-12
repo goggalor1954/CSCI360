@@ -36,6 +36,7 @@ int read_lfsr(LFSR* L)
 
 /* You implement this*/
 
+
         return 0; // remove this line when you properly implement the function.
 
 }
