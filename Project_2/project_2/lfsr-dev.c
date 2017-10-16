@@ -40,6 +40,13 @@ void init_LFSR(LFSR* L, uint64_t initial_state, uint64_t taps)
 	L->state = initial_state;
 	L->taps = taps;
 }
+int parity(uint64_t N)
+{
+/* Return the parity of N*/
+	int p = __builtin_parity(N); // parity of first 32 bits
+	N = __builtin_bswap64(N); //move back 32 to the front
+	return (p+__builtin_parity(N))%2; //overall parity
+}
 
 
 
@@ -54,6 +61,20 @@ int read_lfsr(LFSR* L)
 	return L->state%2;
 }
 
+
+
+//showbits function taken from wikipedia for testing
+void showbits(int x)
+{
+    int i; 
+    for(i=(sizeof(int)*8)-1; i>=0; i--)
+            (x&(1u<<i))?putchar('1'):putchar('0');
+    
+    printf("\n");
+}
+//0x80000000 in unsighned int is the equivilent of an int value with only one 1 on the leftmost bit and all zeros after. using this value to add 1 on the leftmost bit when needed.
+//above is 32 bit. need to replace it iwth the 64 bit equivlent. 	j = (j >>1) | 0x80000000;
+
 int main()
 {
 	LFSR L;
@@ -63,6 +84,11 @@ int main()
 	//everyhing after this i need to fill in myself
 
 	//test
+	uint64_t i;
+	//printf("%d\n", i);
+	i=parity(L.taps & L.state);
+	printf("%llu\n", i);
+
 
 
 
