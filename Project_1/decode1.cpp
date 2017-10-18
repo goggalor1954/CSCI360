@@ -71,7 +71,7 @@ void readAlphaChars( charBox &charBoxVar) //reads in the characters of moby dick
 	{ //need to make sure that lower case letters a read in as upercase letters.
 		if(infile.get()<=122 && infile.get>=97)
 		{
-			charBoxCount( charBoxVar, infile.get()-32);
+			charBoxCount( charBoxVar, infile.get()-32)
 		}//why 32 insted of 26? make sure that numbers right.
 		else 
 		{
