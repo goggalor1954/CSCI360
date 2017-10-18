@@ -61,10 +61,26 @@ int read_lfsr(LFSR* L)
 	return L->state%2;
 }
 
+void next_state(LFSR* L)
+{
+/*Takes LFSR.
+  Returns nothing.
+  Side effect: advances L to next state.(shift to the right and replace leftmost bit with appropriate value)
+*/
+
+ /* You implement this.
+    Hint:  make use of the parity() function provided above*/
+    int mib=parity(L->state);
+    if(mib==1)
+    	L->state = (L->state >>1) | 0x8000000000000000;
+    else L->state = (L->state >> 1);
+
+}
+
 
 
 //showbits function taken from wikipedia for testing
-void showbits(int x)
+void showbits(unsigned int x)
 {
     int i; 
     for(i=(sizeof(int)*8)-1; i>=0; i--)
@@ -72,8 +88,21 @@ void showbits(int x)
     
     printf("\n");
 }
+//also copied for testing
+void bin(uint64_t n)
+{
+    /* step 1 */
+    if (n > 1)
+        bin(n/2);
+ 
+    /* step 2 */
+    printf("%llu", n % 2);
+}
 //0x80000000 in unsighned int is the equivilent of an int value with only one 1 on the leftmost bit and all zeros after. using this value to add 1 on the leftmost bit when needed.
 //above is 32 bit. need to replace it iwth the 64 bit equivlent. 	j = (j >>1) | 0x80000000;
+//0x8000000000000000 64bit hex equivelent
+
+//i think this works, the problem is i'm really confused about wht athe taps are for. read/look up a video on lfsr before using this.
 
 int main()
 {
@@ -87,7 +116,13 @@ int main()
 	uint64_t i;
 	//printf("%d\n", i);
 	i=parity(L.taps & L.state);
-	printf("%llu\n", i);
+	showbits(3);
+	bin(3);
+	printf("\n");
+
+
+
+
 
 
 
