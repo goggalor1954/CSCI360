@@ -2,6 +2,9 @@
 Code for 64 bit LFSR
 Hunter Johnson
 9/15/17
+
+modified by: James Roesemann
+10/12/17
 */
 
 #include <stdint.h>
@@ -35,9 +38,7 @@ int read_lfsr(LFSR* L)
 
 
 /* You implement this*/
-
-
-        return 0; // remove this line when you properly implement the function.
+	return L->state%2;
 
 }
 
@@ -50,6 +51,9 @@ void next_state(LFSR* L)
 
  /* You implement this.
     Hint:  make use of the parity() function provided above*/
+    int lib=parity(L->state & L->taps);
+    if(lib==1) L->state = (L->state >>1) | 0x8000000000000000;
+    else L->state = (L->state >> 1);
 
 }
 
@@ -114,8 +118,49 @@ void get_128_keystream_bits(char* ct,char* kpt)
 /*This is the plaintext attack in which you recover 2m keystream bits.
 
       You implement this.
+//idea for this. for loop to get the first 16 chatacter, maybe store them. combine them to a 64 bit int somehow in order. ah, i know. combine them into a word. no. i think you do an unsigned 64bit, shift by 8 and add the bytes fof the nex tcharacter. fill untill done. no. outoouting to a text file. i can just mod 2 to get the rightmost bit. store it. right shift, and when done output line by line/
 */
-
+/*
+creates an 8 value int array for stroage purposes.
+reads in 16 characters of ct and then kpt
+uses a for loop to get the rightmost bit, store it in the array and shift right untill the end of the character is reached. 
+outputs the bit values one line at a time to the file "key_stream.txt"
+*/
+//i'm uncluar about what order i'm ment to output the bits. do i houtput the leftmost bit of the characters first or the rightmost bit? acoring to him leastsignificat bit first. ie rightmost bit.
+	unsigned char C;
+	FILE* CT = fopen(ct,"r");
+	FILE* KPT = fopen(kpt,"r");
+	FILE* KST = fopen("key_stream.txt","wb");
+	assert(CT);
+	assert(KPT);
+	assert(KST);
+	//read in 16 characters from ct, output their bit values to kst
+	for(int i=0; i<16; i++)
+	{
+		C = getc(CT);
+		//output bits to key_stream.txt
+		for(int j=0; j<8; j++)
+		{
+			fputc(C%2, KST);
+			fputc('\n', KST);
+			C=C >>1;
+		}
+	}
+	//read in 16 characters from kpt, output their bit values to kst
+	for(int i=0; i<16; i++)
+	{
+		C = getc(KPT);
+		//output bits to key_stream.txt
+		for(int j=0; j<8; j++)
+		{
+			fputc(C%2, KST);
+			fputc('\n', KST);
+			C=C >>1;
+		}
+	}
+	fclose(CT);
+	fclose(KPT);
+	fclose(KST);
 }
 
 
@@ -131,19 +176,43 @@ void shape_keystream()
       //See the file matrix.sagews for examples of what the output should look like.
 
   /*You implement this*/
-
-
 }
+//function that gets the first 8 bytes of the plaintest, prints it to the screen inorder to set initial state. remove when done.
+void getFirstEight()
+{
+	unsigned char C;
+	uint64_t firstEight=0;
+	FILE* PT = fopen("toy_pt.txt","r");
+	for(int i=0; i<8; i++)
+	{
+		C = getc(PT);
+		for(int j=0; j<8; j++)
+		{
+			printf("%d",C%2);
+			firstEight |= C%2;
+			C = C>> 1;
+		}
+	}
+	printf("\n");
+	fclose(PT);	
+}
+//hex value of first 8 bytes of 
+
 
 int main()
 {
 	LFSR L;
-	uint64_t initial_state = 0xbeefcafebabecab1;
+	//uint64_t initial_state = 0xbeefcafebabecab1; //original initial state.
+	uint64_t 0xF7DDFD2A16A6040A;
 	uint64_t taps = 0xdeaddeedacedface;
 	init_LFSR(&L,initial_state,taps);
 	encrypt("toy_pt.txt","ct.dat",&L);
 	init_LFSR(&L,initial_state,taps);
-	decrypt("ct.txt","toy_ot.txt",&L);
+	decrypt("ct.dat","toy_ot.txt",&L);
 	//get_128_keystream_bits("target_ciphertext","<you fill this in>");
 	//shape_keystream();
+
+//test
+	getFirstEight();
+	//charTest('G');
 }

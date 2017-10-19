@@ -70,9 +70,8 @@ void next_state(LFSR* L)
 
  /* You implement this.
     Hint:  make use of the parity() function provided above*/
-    int mib=parity(L->state);
-    if(mib==1)
-    	L->state = (L->state >>1) | 0x8000000000000000;
+    int mib=parity(L->state & L->taps);
+    if(mib==1) L->state = (L->state >>1) | 0x8000000000000000;
     else L->state = (L->state >> 1);
 
 }
@@ -89,14 +88,14 @@ void showbits(unsigned int x)
     printf("\n");
 }
 //also copied for testing
-void bin(uint64_t n)
+ void bin(uint64_t n)
 {
-    /* step 1 */
+
     if (n > 1)
         bin(n/2);
  
-    /* step 2 */
-    printf("%llu", n % 2);
+
+    printf("%lu", n % 2);
 }
 //0x80000000 in unsighned int is the equivilent of an int value with only one 1 on the leftmost bit and all zeros after. using this value to add 1 on the leftmost bit when needed.
 //above is 32 bit. need to replace it iwth the 64 bit equivlent. 	j = (j >>1) | 0x80000000;
