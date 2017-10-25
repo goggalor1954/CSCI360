@@ -1,0 +1,6 @@
+notes.
+
+-K when specifiying pw in hex
+-k when just pasword.
+
+-iv only used with -K
